@@ -1,8 +1,8 @@
 
 ## Table of Contents
 
-1. [What you're building (in plain English)](#what-youre-building-in-plain-english)
-2. [The trading concepts you need (with examples)](#the-trading-concepts-you-need-with-examples)
+1. [What we're building (in plain English)](#what-were-building-in-plain-english)
+2. [The trading concepts we need (with examples)](#the-trading-concepts-we-need-with-examples)
 3. [The exact rules](#the-exact-rules)
 4. [What to implement](#what-to-implement)
 5. [Worked example — do this by hand once](#worked-example--do-this-by-hand-once)
@@ -27,7 +27,7 @@ of $10 on every trade, would my results have been better?"** And they want
 to try every combination of stop-loss and take-profit values to find the best
 pair.
 
-Your job: write a function that takes the trades + a list of stop-loss values
+wer job: write a function that takes the trades + a list of stop-loss values
 + a list of take-profit values, and returns the **top 5 combinations** ranked
 by how good they would have been (measured by Sharpe ratio — explained below).
 
@@ -35,13 +35,13 @@ That's the whole task. It's a number-crunching problem with some edge cases.
 
 ---
 
-## The trading concepts you need (with examples)
+## The trading concepts we need (with examples)
 
-You don't need to know finance — just these four ideas:
+We don't need to know finance — just these four ideas:
 
 ### 1. PnL (Profit and Loss)
 
-How much money you made (positive) or lost (negative) on a trade.
+How much money we made (positive) or lost (negative) on a trade.
 - `pnl = +10` → made $10
 - `pnl = -3` → lost $3
 
@@ -50,18 +50,18 @@ How much money you made (positive) or lost (negative) on a trade.
 The **deepest underwater** the trade went *during* its lifetime — even if it
 recovered later. **Always ≥ 0.**
 
-> Example: You buy at $100. Price dips to $92 (you're temporarily down $8),
-> then recovers to $103 (you exit up $3). The trade's `pnl = +3`, but the
-> `mae = 8` — because at the worst point, you were $8 in the hole.
+> Example: we buy at $100. Price dips to $92 (we're temporarily down $8),
+> then recovers to $103 (we exit up $3). The trade's `pnl = +3`, but the
+> `mae = 8` — because at the worst point, we were $8 in the hole.
 
 ### 3. MFE — Maximum Favourable Excursion
 
 The **highest point** the trade reached *during* its lifetime — even if it
 came back down. **Always ≥ 0.**
 
-> Example: You buy at $100. Price spikes to $115 (you're temporarily up $15),
+> Example: we buy at $100. Price spikes to $115 (we're temporarily up $15),
 > then drops back to $103 by close. The trade's `pnl = +3`, but the
-> `mfe = 15` — because at the best point, you were $15 ahead.
+> `mfe = 15` — because at the best point, we were $15 ahead.
 
 ### 4. Stop-Loss (SL) and Take-Profit (TP)
 
@@ -105,10 +105,10 @@ For each trade, given a candidate `stop_loss` (positive number) and
 > **Important:** Stop-loss has priority over take-profit. If a trade could
 > have triggered both (it went deep underwater AND high in profit), we
 > conservatively assume the stop-loss fired first. This is a simplifying
-> assumption — in real markets you'd look at the order of events, but here
+> assumption — in real markets we'd look at the order of events, but here
 > we keep it simple.
 
-You compute the Adjusted PnL for **every trade** under a given `(SL, TP)`
+we compute the Adjusted PnL for **every trade** under a given `(SL, TP)`
 combination, then compute the Sharpe ratio of that series. Repeat for every
 combination, return the top 5.
 
@@ -144,7 +144,7 @@ def optimize(
   | `mae`       | float    | Maximum Adverse Excursion (always ≥ 0)                       |
   | `mfe`       | float    | Maximum Favourable Excursion (always ≥ 0)                    |
 
-  Physical invariants you can rely on:
+  Physical invariants we can rely on:
   - `mfe >= max(0, pnl)` (the trade reached at least its final gain)
   - `mae >= max(0, -pnl)` (the trade went at least as deep as its final loss)
 
@@ -182,8 +182,8 @@ If the parameter grid has fewer than `top_n` combinations (e.g. 3 SLs × 1 TP = 
 
 ## Worked example — do this by hand once
 
-Before you write any code, **work through this by hand** to make sure you
-understand the rules. Then add it as your own pytest test once you've got
+Before we write any code, **work through this by hand** to make sure we
+understand the rules. Then add it as wer own pytest test once we've got
 the basics working.
 
 ### Input — 4 trades
@@ -211,7 +211,7 @@ the basics working.
 - `stopped_out = 2` (trades 2 and 3)
 - `took_profit = 1` (only trade 1 — trade 3 triggered SL first)
 - `mean(adjusted) = 6 / 4 = 1.5`
-- `std(adjusted, ddof=0) ≈ 7.05` (work it out yourself!)
+- `std(adjusted, ddof=0) ≈ 7.05` (work it out werself!)
 - `sharpe ≈ 1.5 / 7.05 ≈ 0.213`
 
 That's one combination. Now imagine doing this for `32 × 32 = 1024`
@@ -249,14 +249,14 @@ This installs `pandas`, `numpy`, and `pytest`.
 pytest tests/ -v
 ```
 
-You should see **5 tests fail** with `NotImplementedError`. That's correct —
-you haven't written anything yet. Your job is to make them pass.
+we should see **5 tests fail** with `NotImplementedError`. That's correct —
+we haven't written anything yet. wer job is to make them pass.
 
 ### 5. Open `optimizer.py` and replace the `raise NotImplementedError`
 
 Implement `optimize(...)` per the spec.
 
-### 6. As you work, run tests frequently
+### 6. As we work, run tests frequently
 
 ```bash
 pytest tests/ -v                                    # all public tests
@@ -270,7 +270,7 @@ pytest tests/ -v -x                                 # stop on first failure
 python sanity_check.py
 ```
 
-This runs the by-hand example from above and prints your function's output
+This runs the by-hand example from above and prints wer function's output
 side-by-side with the expected values. Useful for debugging without running
 pytest.
 
@@ -278,9 +278,9 @@ pytest.
 
 ## Constraints
 
-- **Performance:** A `32 × 32 = 1024`-trial sweep over the 5000-row CSV must finish in **under 30 seconds** on a normal laptop. The reviewer's hidden test enforces this. If you wrote `for trade in trades_df.iterrows():` you'll fail this test. Use numpy vectorisation (see [Tips](#tips--common-pitfalls) below).
-- **No optimisation libraries.** No `optuna`, `scikit-optimize`, `hyperopt`, `bayesian-optimization`, etc. — write the search yourself. `pandas` and `numpy` are fine (and expected).
-- **Standard library + `pandas` + `numpy` only** for the optimiser. You can use other libraries for personal testing if you want, but the submission's `optimizer.py` must run with just `requirements.txt`.
+- **Performance:** A `32 × 32 = 1024`-trial sweep over the 5000-row CSV must finish in **under 30 seconds** on a normal laptop. The reviewer's hidden test enforces this. If we wrote `for trade in trades_df.iterrows():` we'll fail this test. Use numpy vectorisation (see [Tips](#tips--common-pitfalls) below).
+- **No optimisation libraries.** No `optuna`, `scikit-optimize`, `hyperopt`, `bayesian-optimization`, etc. — write the search werself. `pandas` and `numpy` are fine (and expected).
+- **Standard library + `pandas` + `numpy` only** for the optimiser. we can use other libraries for personal testing if we want, but the submission's `optimizer.py` must run with just `requirements.txt`.
 
 ---
 
@@ -304,21 +304,21 @@ every day. The reviewer's hidden tests will hit them all:
 ## Submitting
 
 1. **Add a `NOTES.md`** (about half a page) covering:
-   - What approach did you take? (Naive grid search? Smarter search? Why?)
-   - Where did you trade readability for speed, or vice versa?
-   - **What would you do differently with another day?** (This matters — we'd rather hear "I didn't get to X because Y" than a list of half-finished features.)
+   - What approach did we take? (Naive grid search? Smarter search? Why?)
+   - Where did we trade readability for speed, or vice versa?
+   - **What would we do differently with another day?** (This matters — we'd rather hear "I didn't get to X because Y" than a list of half-finished features.)
 2. Make sure all 5 public tests pass: `pytest tests/ -v`
 3. Zip the entire folder (keep the structure intact).
-4. Email it back. Include your name in the filename: `mini-optimizer-yourname.zip`.
+4. Email it back. Include wer name in the filename: `mini-optimizer-wername.zip`.
 
-**Partial submissions are fine.** We grade what you turned in. Honest notes
-about what you didn't finish are valued.
+**Partial submissions are fine.** We grade what we turned in. Honest notes
+about what we didn't finish are valued.
 
 ---
 
 ## Tips & common pitfalls
 
-### What "vectorisation" means and why you need it
+### What "vectorisation" means and why we need it
 
 The naive approach to this problem is **3 nested loops** (over SLs, over TPs,
 over trades). With 32 × 32 × 5000 = 5.1 million inner iterations, this is
@@ -338,13 +338,13 @@ Rough relative speeds for this problem:
 | List comprehensions + `np.array` | 5-15s | Yes |
 | Fully vectorised broadcasting | <1s | Yes |
 
-You don't need to be a numpy wizard. Even a "halfway vectorised" solution
+we don't need to be a numpy wizard. Even a "halfway vectorised" solution
 (loop over the SL/TP grid, but use numpy arrays for the trade-level math)
 will easily pass.
 
 ### Common pitfalls
 
-| Bug | What you'll see |
+| Bug | What we'll see |
 |-----|----------------|
 | Forgot SL has priority over TP | `test_sl_tp_applied_correctly` fails (wrong counts) |
 | Compared `mae > sl` instead of `mae >= sl` | Off-by-one trade counts on edge values |
@@ -361,12 +361,12 @@ will easily pass.
 ## FAQ
 
 **Q: Can I use ChatGPT / Copilot / Claude to help?**
-A: We can't stop you, but: (a) we read your code carefully, and AI-generated
+A: We can't stop we, but: (a) we read wer code carefully, and AI-generated
 solutions usually miss the subtle edge cases (especially the SL-priority and
-the determinism rule); (b) your `NOTES.md` will need to discuss tradeoffs you
-actually understood; (c) if you use AI, *credit it honestly* in `NOTES.md` and
-focus on showing what you customised. Honesty scores better than pretending
-you wrote everything from scratch.
+the determinism rule); (b) wer `NOTES.md` will need to discuss tradeoffs we
+actually understood; (c) if we use AI, *credit it honestly* in `NOTES.md` and
+focus on showing what we customised. Honesty scores better than pretending
+we wrote everything from scratch.
 
 **Q: Is the goal to write the fastest possible solution?**
 A: No — **correctness first**, then "fast enough" (under 30s for 1024 trials).
@@ -374,11 +374,11 @@ A 5-second correct solution beats a 0.1-second solution that fails 3 edge cases.
 
 **Q: What if I think the spec is ambiguous?**
 A: Make the most reasonable assumption, write it down in `NOTES.md`, and
-move on. Reading specs and resolving ambiguity yourself is part of the job.
+move on. Reading specs and resolving ambiguity werself is part of the job.
 
 **Q: Do I need to add more tests?**
-A: Optional, but it's a positive signal if you do. The reviewer will run
-both your public tests and a private hidden test set covering edge cases.
+A: Optional, but it's a positive signal if we do. The reviewer will run
+both wer public tests and a private hidden test set covering edge cases.
 
 **Q: Can I refactor `optimizer.py` into multiple files?**
 A: Yes. Add helper modules if it makes the code cleaner. The public entry
@@ -389,7 +389,7 @@ A: No. We only call `optimize()` programmatically from the tests. Don't
 spend time on argparse / typer / etc.
 
 **Q: How will I know if my solution is "good enough" to submit?**
-A: All 5 public tests pass + your `NOTES.md` honestly describes what you
+A: All 5 public tests pass + wer `NOTES.md` honestly describes what we
 did. That's a complete submission.
 
 **Q: What if pytest doesn't find `optimizer.py`?**
@@ -399,4 +399,4 @@ which only works if Python's cwd contains it.
 
 ---
 
-Good luck — have fun with it. We're rooting for you.
+Good luck — have fun with it. We're rooting for we.
