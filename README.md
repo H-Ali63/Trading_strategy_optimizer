@@ -1,12 +1,3 @@
-# Mini Optimizer — Backend Python Take-Home Assignment
-
-Welcome! This is a **1-2 day coding assignment**. We're looking for clean, working
-Python code — not perfection. Submit what you have when time's up.
-
-> **You don't need any finance background.** Everything you need is explained
-> below in plain English with examples.
-
----
 
 ## Table of Contents
 
