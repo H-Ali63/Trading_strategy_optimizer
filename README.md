@@ -15,7 +15,7 @@
 
 ---
 
-## What you're building (in plain English)
+## What we're building
 
 Imagine a trader has a CSV of every trade they made last year — 5,000 trades.
 For each trade we know: when it opened, when it closed, how much they made or
